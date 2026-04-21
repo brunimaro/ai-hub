@@ -1,0 +1,793 @@
+
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🤖 AI Hub — Portail d'Intelligence Artificielle</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap');
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --bg-primary: #0a0a0f;
+            --bg-secondary: #12121a;
+            --bg-card: rgba(255, 255, 255, 0.03);
+            --border-color: rgba(255, 255, 255, 0.06);
+            --text-primary: #f0f0f5;
+            --text-secondary: #8888a0;
+            --accent: #6c5ce7;
+            --glow: rgba(108, 92, 231, 0.15);
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        /* ── Animated Background ── */
+        .bg-grid {
+            position: fixed;
+            inset: 0;
+            z-index: 0;
+            background-image:
+                linear-gradient(rgba(255,255,255,0.015) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(255,255,255,0.015) 1px, transparent 1px);
+            background-size: 60px 60px;
+            mask-image: radial-gradient(ellipse 80% 60% at 50% 40%, black, transparent);
+        }
+
+        .bg-orb {
+            position: fixed;
+            border-radius: 50%;
+            filter: blur(120px);
+            z-index: 0;
+            animation: orbFloat 20s ease-in-out infinite;
+        }
+
+        .bg-orb-1 {
+            width: 600px; height: 600px;
+            background: rgba(108, 92, 231, 0.08);
+            top: -200px; left: -100px;
+        }
+
+        .bg-orb-2 {
+            width: 500px; height: 500px;
+            background: rgba(0, 206, 209, 0.06);
+            bottom: -150px; right: -100px;
+            animation-delay: -10s;
+        }
+
+        .bg-orb-3 {
+            width: 400px; height: 400px;
+            background: rgba(253, 121, 168, 0.05);
+            top: 50%; left: 50%;
+            transform: translate(-50%, -50%);
+            animation-delay: -5s;
+        }
+
+        @keyframes orbFloat {
+            0%, 100% { transform: translate(0, 0) scale(1); }
+            25% { transform: translate(30px, -40px) scale(1.05); }
+            50% { transform: translate(-20px, 20px) scale(0.95); }
+            75% { transform: translate(40px, 30px) scale(1.02); }
+        }
+
+        /* ── Layout ── */
+        .container {
+            position: relative;
+            z-index: 1;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 40px 24px 80px;
+        }
+
+        /* ── Header ── */
+        header {
+            text-align: center;
+            padding: 60px 0 20px;
+        }
+
+        .logo-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: rgba(108, 92, 231, 0.1);
+            border: 1px solid rgba(108, 92, 231, 0.2);
+            border-radius: 50px;
+            padding: 8px 20px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            color: #a29bfe;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin-bottom: 30px;
+        }
+
+        .logo-badge .dot {
+            width: 6px; height: 6px;
+            background: #6c5ce7;
+            border-radius: 50%;
+            animation: pulse 2s ease-in-out infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; transform: scale(1); }
+            50% { opacity: 0.4; transform: scale(0.8); }
+        }
+
+        h1 {
+            font-size: clamp(2.5rem, 6vw, 4.5rem);
+            font-weight: 900;
+            letter-spacing: -2px;
+            line-height: 1.05;
+            margin-bottom: 20px;
+            background: linear-gradient(135deg, #ffffff 0%, #a29bfe 50%, #fd79a8 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .subtitle {
+            font-size: 1.15rem;
+            color: var(--text-secondary);
+            font-weight: 400;
+            max-width: 550px;
+            margin: 0 auto;
+            line-height: 1.7;
+        }
+
+        /* ── Search Bar ── */
+        .search-wrapper {
+            max-width: 520px;
+            margin: 40px auto 50px;
+            position: relative;
+        }
+
+        .search-bar {
+            width: 100%;
+            padding: 16px 24px 16px 52px;
+            background: rgba(255, 255, 255, 0.04);
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            color: var(--text-primary);
+            font-size: 0.95rem;
+            font-family: inherit;
+            outline: none;
+            transition: all 0.3s ease;
+        }
+
+        .search-bar::placeholder {
+            color: var(--text-secondary);
+        }
+
+        .search-bar:focus {
+            border-color: rgba(108, 92, 231, 0.4);
+            background: rgba(255, 255, 255, 0.06);
+            box-shadow: 0 0 0 4px rgba(108, 92, 231, 0.08);
+        }
+
+        .search-icon {
+            position: absolute;
+            left: 20px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--text-secondary);
+            font-size: 1.1rem;
+            pointer-events: none;
+        }
+
+        /* ── Filter Tabs ── */
+        .filters {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-bottom: 40px;
+        }
+
+        .filter-btn {
+            padding: 8px 18px;
+            border-radius: 10px;
+            border: 1px solid var(--border-color);
+            background: transparent;
+            color: var(--text-secondary);
+            font-size: 0.82rem;
+            font-weight: 500;
+            font-family: inherit;
+            cursor: pointer;
+            transition: all 0.25s ease;
+        }
+
+        .filter-btn:hover {
+            border-color: rgba(255,255,255,0.15);
+            color: var(--text-primary);
+            background: rgba(255,255,255,0.04);
+        }
+
+        .filter-btn.active {
+            background: rgba(108, 92, 231, 0.15);
+            border-color: rgba(108, 92, 231, 0.3);
+            color: #a29bfe;
+        }
+
+        /* ── Grid ── */
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 16px;
+        }
+
+        /* ── Card ── */
+        .card {
+            position: relative;
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 20px;
+            padding: 28px;
+            text-decoration: none;
+            color: inherit;
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+            transition: all 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+            overflow: hidden;
+            cursor: pointer;
+        }
+
+        .card::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            border-radius: 20px;
+            background: radial-gradient(
+                600px circle at var(--mouse-x, 50%) var(--mouse-y, 50%),
+                rgba(255,255,255,0.04),
+                transparent 40%
+            );
+            opacity: 0;
+            transition: opacity 0.35s ease;
+        }
+
+        .card:hover::before {
+            opacity: 1;
+        }
+
+        .card:hover {
+            border-color: rgba(255, 255, 255, 0.1);
+            transform: translateY(-4px);
+            box-shadow: 0 20px 60px -20px rgba(0,0,0,0.5);
+        }
+
+        .card-header {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+        }
+
+        .card-icon {
+            width: 48px;
+            height: 48px;
+            border-radius: 14px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.4rem;
+            flex-shrink: 0;
+            position: relative;
+        }
+
+        .card-title {
+            font-size: 1.1rem;
+            font-weight: 700;
+            letter-spacing: -0.3px;
+        }
+
+        .card-company {
+            font-size: 0.72rem;
+            color: var(--text-secondary);
+            font-weight: 500;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .card-desc {
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+            line-height: 1.6;
+        }
+
+        .card-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 6px;
+            margin-top: auto;
+        }
+
+        .tag {
+            padding: 4px 10px;
+            border-radius: 6px;
+            font-size: 0.7rem;
+            font-weight: 500;
+            background: rgba(255,255,255,0.04);
+            color: var(--text-secondary);
+            border: 1px solid rgba(255,255,255,0.04);
+        }
+
+        .card-arrow {
+            position: absolute;
+            top: 28px;
+            right: 28px;
+            color: var(--text-secondary);
+            opacity: 0;
+            transform: translate(-4px, 4px);
+            transition: all 0.3s ease;
+            font-size: 1.1rem;
+        }
+
+        .card:hover .card-arrow {
+            opacity: 1;
+            transform: translate(0, 0);
+        }
+
+        /* ── Card Glow Accents ── */
+        .card[data-glow="purple"] { --card-accent: #6c5ce7; }
+        .card[data-glow="green"]  { --card-accent: #00b894; }
+        .card[data-glow="blue"]   { --card-accent: #0984e3; }
+        .card[data-glow="red"]    { --card-accent: #e17055; }
+        .card[data-glow="teal"]   { --card-accent: #00cec9; }
+        .card[data-glow="orange"] { --card-accent: #e67e22; }
+        .card[data-glow="pink"]   { --card-accent: #fd79a8; }
+        .card[data-glow="indigo"] { --card-accent: #5f27cd; }
+        .card[data-glow="cyan"]   { --card-accent: #00b4d8; }
+        .card[data-glow="gold"]   { --card-accent: #fdcb6e; }
+
+        .card:hover {
+            border-color: color-mix(in srgb, var(--card-accent) 30%, transparent);
+        }
+
+        .card[data-glow="purple"]:hover { box-shadow: 0 20px 60px -20px rgba(108,92,231,0.25); }
+        .card[data-glow="green"]:hover  { box-shadow: 0 20px 60px -20px rgba(0,184,148,0.25); }
+        .card[data-glow="blue"]:hover   { box-shadow: 0 20px 60px -20px rgba(9,132,227,0.25); }
+        .card[data-glow="red"]:hover    { box-shadow: 0 20px 60px -20px rgba(225,112,85,0.25); }
+        .card[data-glow="teal"]:hover   { box-shadow: 0 20px 60px -20px rgba(0,206,201,0.25); }
+        .card[data-glow="orange"]:hover { box-shadow: 0 20px 60px -20px rgba(230,126,34,0.25); }
+        .card[data-glow="pink"]:hover   { box-shadow: 0 20px 60px -20px rgba(253,121,168,0.25); }
+        .card[data-glow="indigo"]:hover { box-shadow: 0 20px 60px -20px rgba(95,39,205,0.25); }
+        .card[data-glow="cyan"]:hover   { box-shadow: 0 20px 60px -20px rgba(0,180,216,0.25); }
+        .card[data-glow="gold"]:hover   { box-shadow: 0 20px 60px -20px rgba(253,203,110,0.25); }
+
+        .card-icon {
+            background: color-mix(in srgb, var(--card-accent) 12%, transparent);
+            color: var(--card-accent);
+        }
+
+        /* ── Footer ── */
+        footer {
+            text-align: center;
+            padding: 60px 0 20px;
+            color: var(--text-secondary);
+            font-size: 0.8rem;
+        }
+
+        footer a {
+            color: var(--text-secondary);
+            text-decoration: none;
+            transition: color 0.2s;
+        }
+
+        footer a:hover { color: var(--text-primary); }
+
+        .footer-divider {
+            width: 60px;
+            height: 1px;
+            background: var(--border-color);
+            margin: 0 auto 20px;
+        }
+
+        /* ── Responsive ── */
+        @media (max-width: 640px) {
+            .grid {
+                grid-template-columns: 1fr;
+            }
+            header { padding: 40px 0 10px; }
+            .container { padding: 20px 16px 60px; }
+        }
+
+        /* ── Animations ── */
+        .card {
+            opacity: 0;
+            animation: fadeUp 0.5s ease forwards;
+        }
+
+        @keyframes fadeUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Stagger animation */
+        .card:nth-child(1)  { animation-delay: 0.05s; }
+        .card:nth-child(2)  { animation-delay: 0.10s; }
+        .card:nth-child(3)  { animation-delay: 0.15s; }
+        .card:nth-child(4)  { animation-delay: 0.20s; }
+        .card:nth-child(5)  { animation-delay: 0.25s; }
+        .card:nth-child(6)  { animation-delay: 0.30s; }
+        .card:nth-child(7)  { animation-delay: 0.35s; }
+        .card:nth-child(8)  { animation-delay: 0.40s; }
+        .card:nth-child(9)  { animation-delay: 0.45s; }
+        .card:nth-child(10) { animation-delay: 0.50s; }
+        .card:nth-child(11) { animation-delay: 0.55s; }
+        .card:nth-child(12) { animation-delay: 0.60s; }
+
+        /* ── Hidden state for search/filter ── */
+        .card.hidden {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Background -->
+    <div class="bg-grid"></div>
+    <div class="bg-orb bg-orb-1"></div>
+    <div class="bg-orb bg-orb-2"></div>
+    <div class="bg-orb bg-orb-3"></div>
+
+    <div class="container">
+
+        <!-- Header -->
+        <header>
+            <div class="logo-badge">
+                <span class="dot"></span>
+                Portail IA 2026
+            </div>
+            <h1>Toutes vos IA,<br>un seul endroit.</h1>
+            <p class="subtitle">Accédez en un clic aux meilleurs modèles d'intelligence artificielle. Choisissez l'outil parfait pour chaque tâche.</p>
+        </header>
+
+        <!-- Search -->
+        <div class="search-wrapper">
+            <span class="search-icon">🔍</span>
+            <input type="text" class="search-bar" id="searchBar" placeholder="Rechercher une IA..." autocomplete="off">
+        </div>
+
+        <!-- Filters -->
+        <div class="filters">
+            <button class="filter-btn active" data-filter="all">✨ Toutes</button>
+            <button class="filter-btn" data-filter="general">💬 Conversation</button>
+            <button class="filter-btn" data-filter="search">🔎 Recherche</button>
+            <button class="filter-btn" data-filter="code">💻 Code</button>
+            <button class="filter-btn" data-filter="image">🎨 Image</button>
+            <button class="filter-btn" data-filter="open">🌐 Open Source</button>
+        </div>
+
+        <!-- Grid -->
+        <div class="grid" id="cardGrid">
+
+            <!-- Qwen -->
+            <a href="https://chat.qwen.ai/" target="_blank" rel="noopener"
+               class="card" data-glow="indigo"
+               data-categories="general,code,open"
+               data-name="Qwen">
+                <span class="card-arrow">↗</span>
+                <div class="card-header">
+                    <div class="card-icon">🔮</div>
+                    <div>
+                        <div class="card-title">Qwen</div>
+                        <div class="card-company">Alibaba Group</div>
+                    </div>
+                </div>
+                <div class="card-desc">Modèle puissant et polyvalent, excellent en raisonnement, code et compréhension multilingue.</div>
+                <div class="card-tags">
+                    <span class="tag">Multilingue</span>
+                    <span class="tag">Raisonnement</span>
+                    <span class="tag">Open Source</span>
+                </div>
+            </a>
+
+            <!-- ChatGPT -->
+            <a href="https://chatgpt.com/" target="_blank" rel="noopener"
+               class="card" data-glow="green"
+               data-categories="general,code,image"
+               data-name="ChatGPT">
+                <span class="card-arrow">↗</span>
+                <div class="card-header">
+                    <div class="card-icon">💬</div>
+                    <div>
+                        <div class="card-title">ChatGPT</div>
+                        <div class="card-company">OpenAI</div>
+                    </div>
+                </div>
+                <div class="card-desc">Le chatbot IA le plus populaire. Génération de texte, code, analyse de données et création d'images.</div>
+                <div class="card-tags">
+                    <span class="tag">Conversation</span>
+                    <span class="tag">GPT-4o</span>
+                    <span class="tag">Multimodal</span>
+                </div>
+            </a>
+
+            <!-- Perplexity -->
+            <a href="https://www.perplexity.ai/" target="_blank" rel="noopener"
+               class="card" data-glow="cyan"
+               data-categories="search"
+               data-name="Perplexity">
+                <span class="card-arrow">↗</span>
+                <div class="card-header">
+                    <div class="card-icon">🔎</div>
+                    <div>
+                        <div class="card-title">Perplexity</div>
+                        <div class="card-company">Perplexity AI</div>
+                    </div>
+                </div>
+                <div class="card-desc">Moteur de recherche IA avec réponses sourcées en temps réel. Idéal pour la recherche d'information.</div>
+                <div class="card-tags">
+                    <span class="tag">Recherche</span>
+                    <span class="tag">Sourcé</span>
+                    <span class="tag">Temps réel</span>
+                </div>
+            </a>
+
+            <!-- Gemini -->
+            <a href="https://gemini.google.com/" target="_blank" rel="noopener"
+               class="card" data-glow="blue"
+               data-categories="general,code,image"
+               data-name="Gemini">
+                <span class="card-arrow">↗</span>
+                <div class="card-header">
+                    <div class="card-icon">💎</div>
+                    <div>
+                        <div class="card-title">Gemini</div>
+                        <div class="card-company">Google</div>
+                    </div>
+                </div>
+                <div class="card-desc">IA de Google avec intégration ekosystème, raisonnement avancé et capacités multimodales natives.</div>
+                <div class="card-tags">
+                    <span class="tag">Google</span>
+                    <span class="tag">Multimodal</span>
+                    <span class="tag">Intégré</span>
+                </div>
+            </a>
+
+            <!-- Grok -->
+            <a href="https://grok.com/" target="_blank" rel="noopener"
+               class="card" data-glow="red"
+               data-categories="general,search"
+               data-name="Grok">
+                <span class="card-arrow">↗</span>
+                <div class="card-header">
+                    <div class="card-icon">⚡</div>
+                    <div>
+                        <div class="card-title">Grok</div>
+                        <div class="card-company">xAI</div>
+                    </div>
+                </div>
+                <div class="card-desc">IA d'Elon Musk avec accès en temps réel à X/Twitter. Réponses directes et sans filtres.</div>
+                <div class="card-tags">
+                    <span class="tag">Temps réel</span>
+                    <span class="tag">X / Twitter</span>
+                    <span class="tag">Direct</span>
+                </div>
+            </a>
+
+            <!-- DeepSeek -->
+            <a href="https://chat.deepseek.com/" target="_blank" rel="noopener"
+               class="card" data-glow="teal"
+               data-categories="general,code,open"
+               data-name="DeepSeek">
+                <span class="card-arrow">↗</span>
+                <div class="card-header">
+                    <div class="card-icon">🐋</div>
+                    <div>
+                        <div class="card-title">DeepSeek</div>
+                        <div class="card-company">DeepSeek AI</div>
+                    </div>
+                </div>
+                <div class="card-desc">IA chinoise open source aux performances impressionnantes en code, maths et raisonnement logique.</div>
+                <div class="card-tags">
+                    <span class="tag">Open Source</span>
+                    <span class="tag">Code</span>
+                    <span class="tag">Maths</span>
+                </div>
+            </a>
+
+            <!-- Claude -->
+            <a href="https://claude.ai/" target="_blank" rel="noopener"
+               class="card" data-glow="orange"
+               data-categories="general,code"
+               data-name="Claude">
+                <span class="card-arrow">↗</span>
+                <div class="card-header">
+                    <div class="card-icon">🧠</div>
+                    <div>
+                        <div class="card-title">Claude</div>
+                        <div class="card-company">Anthropic</div>
+                    </div>
+                </div>
+                <div class="card-desc">IA axée sur la sécurité et le raisonnement. Excellente pour l'analyse de longs documents et le code.</div>
+                <div class="card-tags">
+                    <span class="tag">Analyse</span>
+                    <span class="tag">Long contexte</span>
+                    <span class="tag">Sûr</span>
+                </div>
+            </a>
+
+            <!-- Copilot -->
+            <a href="https://copilot.microsoft.com/" target="_blank" rel="noopener"
+               class="card" data-glow="blue"
+               data-categories="general,code,image"
+               data-name="Microsoft Copilot">
+                <span class="card-arrow">↗</span>
+                <div class="card-header">
+                    <div class="card-icon">🅜</div>
+                    <div>
+                        <div class="card-title">Copilot</div>
+                        <div class="card-company">Microsoft</div>
+                    </div>
+                </div>
+                <div class="card-desc">Assistant IA intégré à Windows, Edge et Office. Propulsé par les modèles GPT-4 et DALL·E.</div>
+                <div class="card-tags">
+                    <span class="tag">Microsoft</span>
+                    <span class="tag">DALL·E</span>
+                    <span class="tag">Gratuit</span>
+                </div>
+            </a>
+
+            <!-- Meta AI -->
+            <a href="https://www.meta.ai/" target="_blank" rel="noopener"
+               class="card" data-glow="pink"
+               data-categories="general,image,open"
+               data-name="Meta AI">
+                <span class="card-arrow">↗</span>
+                <div class="card-header">
+                    <div class="card-icon">🌐</div>
+                    <div>
+                        <div class="card-title">Meta AI</div>
+                        <div class="card-company">Meta</div>
+                    </div>
+                </div>
+                <div class="card-desc">IA de Meta basée sur Llama. Disponible sur WhatsApp, Instagram, Facebook et en standalone.</div>
+                <div class="card-tags">
+                    <span class="tag">Llama</span>
+                    <span class="tag">Social</span>
+                    <span class="tag">Open Source</span>
+                </div>
+            </a>
+
+            <!-- Mistral -->
+            <a href="https://chat.mistral.ai/" target="_blank" rel="noopener"
+               class="card" data-glow="gold"
+               data-categories="general,code,open"
+               data-name="Mistral Le Chat">
+                <span class="card-arrow">↗</span>
+                <div class="card-header">
+                    <div class="card-icon">🌬️</div>
+                    <div>
+                        <div class="card-title">Mistral</div>
+                        <div class="card-company">Mistral AI — France 🇫🇷</div>
+                    </div>
+                </div>
+                <div class="card-desc">La French Tech au service de l'IA. Modèles open source performants et efficaces.</div>
+                <div class="card-tags">
+                    <span class="tag">🇫🇷 Français</span>
+                    <span class="tag">Open Source</span>
+                    <span class="tag">Efficace</span>
+                </div>
+            </a>
+
+            <!-- HuggingChat -->
+            <a href="https://huggingface.co/chat" target="_blank" rel="noopener"
+               class="card" data-glow="gold"
+               data-categories="general,code,open"
+               data-name="HuggingChat">
+                <span class="card-arrow">↗</span>
+                <div class="card-header">
+                    <div class="card-icon">🤗</div>
+                    <div>
+                        <div class="card-title">HuggingChat</div>
+                        <div class="card-company">Hugging Face</div>
+                    </div>
+                </div>
+                <div class="card-desc">Interface de chat open source permettant de tester plusieurs modèles communautaires gratuitement.</div>
+                <div class="card-tags">
+                    <span class="tag">Open Source</span>
+                    <span class="tag">Multi-modèles</span>
+                    <span class="tag">Communauté</span>
+                </div>
+            </a>
+
+            <!-- You.com -->
+            <a href="https://you.com/" target="_blank" rel="noopener"
+               class="card" data-glow="purple"
+               data-categories="search,general"
+               data-name="You.com">
+                <span class="card-arrow">↗</span>
+                <div class="card-header">
+                    <div class="card-icon">🟣</div>
+                    <div>
+                        <div class="card-title">You.com</div>
+                        <div class="card-company">You.com</div>
+                    </div>
+                </div>
+                <div class="card-desc">Moteur de recherche IA personnalisable avec plusieurs modes : conversation, création, code et recherche.</div>
+                <div class="card-tags">
+                    <span class="tag">Recherche</span>
+                    <span class="tag">Personnalisable</span>
+                    <span class="tag">Multi-modes</span>
+                </div>
+            </a>
+
+        </div>
+
+        <!-- Footer -->
+        <footer>
+            <div class="footer-divider"></div>
+            <p>AI Hub — Portail personnel · Fait avec ❤️ · 2026</p>
+        </footer>
+
+    </div>
+
+    <script>
+        // ── Mouse glow effect on cards ──
+        document.querySelectorAll('.card').forEach(card => {
+            card.addEventListener('mousemove', e => {
+                const rect = card.getBoundingClientRect();
+                card.style.setProperty('--mouse-x', (e.clientX - rect.left) + 'px');
+                card.style.setProperty('--mouse-y', (e.clientY - rect.top) + 'px');
+            });
+        });
+
+        // ── Search ──
+        const searchBar = document.getElementById('searchBar');
+        searchBar.addEventListener('input', () => {
+            const query = searchBar.value.toLowerCase().trim();
+            document.querySelectorAll('.card').forEach(card => {
+                const name = card.dataset.name.toLowerCase();
+                const desc = card.querySelector('.card-desc').textContent.toLowerCase();
+                const match = name.includes(query) || desc.includes(query);
+                card.classList.toggle('hidden', !match);
+            });
+        });
+
+        // ── Filter tabs ──
+        document.querySelectorAll('.filter-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+                const filter = btn.dataset.filter;
+
+                document.querySelectorAll('.card').forEach(card => {
+                    if (filter === 'all') {
+                        card.classList.remove('hidden');
+                    } else {
+                        const cats = card.dataset.categories;
+                        card.classList.toggle('hidden', !cats.includes(filter));
+                    }
+                });
+            });
+        });
+
+        // ── Keyboard shortcut: / to focus search ──
+        document.addEventListener('keydown', e => {
+            if (e.key === '/' && document.activeElement !== searchBar) {
+                e.preventDefault();
+                searchBar.focus();
+            }
+        });
+    </script>
+
+</body>
+</html>
