@@ -3,7 +3,36 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>🤖 AI Hub — AI Intelligence Portal</title>
+    
+    <!-- 🔍 SEO Meta Tags -->
+    <title>🤖 AI Hub — Portail d'Intelligence Artificielle | Accédez à Qwen, ChatGPT, Gemini & plus</title>
+    <meta name="description" content="Portail centralisé pour accéder aux meilleures IA : Qwen, ChatGPT, Perplexity, Gemini, Grok, DeepSeek, Claude. Recherche, filtres, liens directs. Gratuit et sans inscription.">
+    <meta name="keywords" content="IA, intelligence artificielle, Qwen, ChatGPT, Gemini, Grok, DeepSeek, Claude, Perplexity, Mistral, AI tools, chatbot, recherche IA">
+    <meta name="author" content="WebKraft.fr">
+    <meta name="robots" content="index, follow">
+    <link rel="canonical" href="https://brunimaro.github.io/ai-hub/">
+    
+    <!-- 🌐 Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://brunimaro.github.io/ai-hub/">
+    <meta property="og:title" content="🤖 AI Hub — Toutes vos IA, un seul endroit">
+    <meta property="og:description" content="Accédez en un clic aux meilleurs modèles d'IA : Qwen, ChatGPT, Gemini, Grok, DeepSeek et plus. Interface moderne, recherche et filtres inclus.">
+    <meta property="og:image" content="https://brunimaro.github.io/ai-hub/og-image.png">
+    <meta property="og:locale" content="fr_FR">
+    <meta property="og:locale:alternate" content="en_US">
+    
+    <!-- 🐦 Twitter Cards -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:url" content="https://brunimaro.github.io/ai-hub/">
+    <meta name="twitter:title" content="🤖 AI Hub — Portail IA tout-en-un">
+    <meta name="twitter:description" content="Centralisez votre accès aux IA : Qwen, ChatGPT, Gemini, Grok, DeepSeek. Recherche, filtres, design moderne.">
+    <meta name="twitter:image" content="https://brunimaro.github.io/ai-hub/og-image.png">
+    
+    <!-- 🤖 Favicon Robot (SVG Data URI) -->
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ccircle cx='50' cy='50' r='45' fill='%236c5ce7'/%3E%3Ctext x='50' y='68' font-size='60' text-anchor='middle' fill='white'%3E🤖%3C/text%3E%3C/svg%3E">
+    <link rel="apple-touch-icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ccircle cx='50' cy='50' r='45' fill='%236c5ce7'/%3E%3Ctext x='50' y='68' font-size='60' text-anchor='middle' fill='white'%3E🤖%3C/text%3E%3C/svg%3E">
+    
+    <!-- 🎨 Styles -->
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap');
 
@@ -256,8 +285,16 @@
             text-align: center; padding: 60px 0 20px;
             color: var(--text-secondary); font-size: 0.8rem;
         }
-        footer a { color: var(--text-secondary); text-decoration: none; transition: color 0.2s; }
-        footer a:hover { color: var(--text-primary); }
+        footer a { 
+            color: var(--text-secondary); 
+            text-decoration: none; 
+            transition: color 0.2s;
+            border-bottom: 1px dashed transparent;
+        }
+        footer a:hover { 
+            color: var(--accent); 
+            border-bottom-color: var(--accent);
+        }
         .footer-divider { width: 60px; height: 1px; background: var(--border-color); margin: 0 auto 20px; }
 
         /* ── Responsive ── */
@@ -302,7 +339,7 @@
                     <span class="dot"></span>
                     <span data-i18n="badge">Portail IA 2026</span>
                 </div>
-                <div class="lang-toggle" id="langToggle" role="button" tabindex="0">
+                <div class="lang-toggle" id="langToggle" role="button" tabindex="0" aria-label="Changer de langue / Change language">
                     <button class="lang-btn active" data-lang="fr">FR</button>
                     <button class="lang-btn" data-lang="en">EN</button>
                 </div>
@@ -313,7 +350,7 @@
 
         <div class="search-wrapper">
             <span class="search-icon">🔍</span>
-            <input type="text" class="search-bar" id="searchBar" data-i18n-placeholder="searchPlaceholder" placeholder="Rechercher une IA..." autocomplete="off">
+            <input type="text" class="search-bar" id="searchBar" data-i18n-placeholder="searchPlaceholder" placeholder="Rechercher une IA..." autocomplete="off" aria-label="Rechercher une intelligence artificielle">
         </div>
 
         <div class="filters">
@@ -545,7 +582,11 @@
 
         <footer>
             <div class="footer-divider"></div>
-            <p><span data-i18n="footer">AI Hub — Portail personnel · Fait avec ❤️ par <a href="https://www.webkraft.fr" target="_blank">WebKraft.fr</a> · 2026</span></p>
+            <p>
+                <span data-i18n="footerStart">AI Hub — Portail personnel · Fait avec ❤️ par </span>
+                <a href="https://www.webkraft.fr" target="_blank" rel="noopener">WebKraft.fr</a>
+                <span data-i18n="footerEnd"> · 2026</span>
+            </p>
         </footer>
     </div>
 
@@ -595,7 +636,8 @@
                 tagCommunity: "Communauté",
                 tagCustomizable: "Personnalisable",
                 tagMultiMode: "Multi-modes",
-                footer: "AI Hub — Portail personnel · Fait avec ❤️ par <a href='https://www.webkraft.fr' target='_blank'>WebKraft.fr</a> · 2026"
+                footerStart: "AI Hub — Portail personnel · Fait avec ❤️ par ",
+                footerEnd: " · 2026"
             },
             en: {
                 badge: "AI Portal 2026",
@@ -640,14 +682,29 @@
                 tagCommunity: "Community",
                 tagCustomizable: "Customizable",
                 tagMultiMode: "Multi-mode",
-                footer: "AI Hub — Personal portal · Made with ❤️ by <a href='https://www.webkraft.fr' target='_blank'>WebKraft.fr</a> · 2026"
+                footerStart: "AI Hub — Personal portal · Made with ❤️ by ",
+                footerEnd: " · 2026"
             }
         };
 
-        // ── Language Switcher ──
+        // ── Language Detection & Switcher ──
         const langToggle = document.getElementById('langToggle');
         const langBtns = langToggle.querySelectorAll('.lang-btn');
-        let currentLang = localStorage.getItem('aiHubLang') || 'fr';
+        
+        // Detect browser language with fallback logic
+        function detectPreferredLanguage() {
+            const saved = localStorage.getItem('aiHubLang');
+            if (saved && (saved === 'fr' || saved === 'en')) return saved;
+            
+            const browserLang = navigator.language || navigator.userLanguage;
+            const langCode = browserLang.toLowerCase().split('-')[0];
+            
+            // Support FR/EN, fallback to FR for other languages
+            if (langCode === 'en') return 'en';
+            return 'fr'; // default fallback
+        }
+        
+        let currentLang = detectPreferredLanguage();
 
         function setLanguage(lang) {
             document.documentElement.lang = lang;
@@ -674,6 +731,10 @@
                     el.placeholder = translations[lang][key];
                 }
             });
+            
+            // Update document title for SEO
+            const titleKey = lang === 'fr' ? '🤖 AI Hub — Portail d\'Intelligence Artificielle' : '🤖 AI Hub — AI Intelligence Portal';
+            document.title = titleKey;
         }
 
         langBtns.forEach(btn => {
@@ -692,7 +753,7 @@
             }
         });
 
-        // Initialize language
+        // Initialize language on load
         setLanguage(currentLang);
 
         // ── Mouse glow effect on cards ──
