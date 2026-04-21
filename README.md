@@ -31,6 +31,17 @@ Chaque carte inclut :
 - ✅ Description concise des forces
 - ✅ Tags thématiques pour identification rapide
 
+## 🌍 Langues / Languages
+
+Cette page est disponible en **français** et en **anglais**.  
+This page is available in **French** and **English**.
+
+- 🇫🇷 **Français** : Langue par défaut / Default language
+- 🇬🇧 **English** : Cliquez sur "EN" en haut à droite / Click "EN" in the top-right corner
+
+> Votre préférence est automatiquement mémorisée.  
+> Your preference is automatically saved.
+
 ## 🚀 Utiliser le projet
 
 ### Option 1 : En ligne (recommandé)
